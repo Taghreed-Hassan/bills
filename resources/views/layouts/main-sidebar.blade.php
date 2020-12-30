@@ -65,7 +65,7 @@
 						<ul class="slide-menu">
                             <li><a class="slide-item" href="{{ url('/' . $page='sections') }}">اضافة قسم </a></li>
 
-                            <li><a class="slide-item" href="{{ url('/' . $page='profile') }}">المنتجات  </a></li>
+                            <li><a class="slide-item" href="{{ url('/' . $page='Products') }}">المنتجات  </a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='editprofile') }}">اضافة مستخدم</a></li>
 
 						</ul>

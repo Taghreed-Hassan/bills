@@ -81,7 +81,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                    <form action="{{route('products.store')}}" method="post">
+                                    <form action="" method="post">
                                     {{csrf_field()}}
                                     <div class="modal-body">
                                         <div class="form-group">
@@ -93,9 +93,11 @@
                                         <label class="my-1 mr-2" for="inlineFormCustomSelectPref">القسم</label>
                                         <select name="section_id" id="section_id" class="form-control" required>
                                             <option value="" selected disabled> --حدد القسم--</option>
-                                            @foreach ($sections as $section)
-                                                <option value="{{ $section->id }}">{{ $section->section_name }}</option>
-                                            @endforeach
+                                            <!--
+                                            
+
+                                                
+                                            !-->
                                         </select>
 
                                         <div class="form-group">
