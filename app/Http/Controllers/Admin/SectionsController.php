@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SectionValidation;
 
+
 class SectionsController extends Controller
 {
     public function index()
@@ -33,7 +34,7 @@ class SectionsController extends Controller
         return redirect('/sections');
 
 
-
+        
 
 
     }    //end of store

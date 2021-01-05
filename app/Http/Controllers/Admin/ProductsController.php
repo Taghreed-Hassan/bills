@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Products;
+
 use App\Http\Controllers\Controller;
+use App\Models\Products;
+use App\Models\sections;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PrductValidation;
+
+
 
 class ProductsController extends Controller
 {
@@ -16,7 +22,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return view('Products.products');
+        
+        $sections = sections::all();  //calling name of sections in drop down after making foreach in view
+        $products = products::all();
+
+        return view('Products.products',compact('sections','products'));
+        
+        
     }
 
     /**
@@ -37,7 +49,23 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            'Product_name.sections' => 'required|unique:products',
+        ]);
+
+
+        Products::create([
+            'Product_name' => $request->Product_name,
+            'section_id' => $request->section_id,
+            'description' => $request->description,
+        ]);
+
+
+        session()->flash('Add', 'تم اضافة المنتج بنجاح ');
+        return redirect('/Products');
+        
+      // return $request;
     }
 
     /**
@@ -71,8 +99,21 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Products $products)
     {
-        //
-    }
+        //return $request;
+  
+        $id = sections::where('section_name', $request->section_name)->first()->id;
+
+        $Products = Products::findOrFail($request->pro_id);
+ 
+        $Products->update([
+        'Product_name' => $request->Product_name,
+        'description' => $request->description,
+        'section_id' => $id,
+        ]);
+ 
+        session()->flash('Edit', 'تم تعديل المنتج بنجاح');
+        return back();
+      }
 
     /**
      * Remove the specified resource from storage.
@@ -80,8 +121,13 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function destroy(Request $request)
     {
         //
-    }
+        $Products = Products::findOrFail($request->pro_id);
+        $Products->delete();
+        session()->flash('delete', 'تم حذف المنتج بنجاح');
+        return back();
+   }
+    
 }
