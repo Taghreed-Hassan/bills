@@ -52,7 +52,11 @@ class ProductsController extends Controller
         
         $validator = Validator::make($request->all(), [
             'Product_name.sections' => 'required|unique:products',
+            //'section_name.products ' => 'required|unique:products,
+
         ]);
+
+       
 
 
         Products::create([

@@ -23,12 +23,16 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
 
 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/invoices', 'InvoicesController@index');
+    Route::resource('/invoices', 'InvoicesController');
     Route::resource('/sections', 'SectionsController');
     Route::resource('/Products', 'ProductsController');
+    Route::get('/section/{id}', 'InvoicesController@getproducts');
+
+
+
 
     Route::get('foo', function () {
-        return view ('buttons');
+        return view ('invoices.add_invoice');
     });
 
     Route::get('/{page}', 'Admin\AdminController@index');

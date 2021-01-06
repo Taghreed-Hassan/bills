@@ -20,7 +20,8 @@ class SectionsController extends Controller
 
     public function store(SectionValidation $request)
     {
-
+        
+        
 
         sections::create([
             'section_name' => $request->section_name,

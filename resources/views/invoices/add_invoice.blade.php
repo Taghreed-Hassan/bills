@@ -78,9 +78,11 @@
                                     onchange="console.log('change is firing')">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد القسم</option>
+                                  
                                     @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}"> {{ $section->section_name }}</option>
-                                    @endforeach
+                                    <option value="{{ $section->id }}"> {{ $section->section_name }}</option>
+                                @endforeach
+
                                 </select>
                             </div>
 
@@ -211,7 +213,7 @@
         }).val();
 
     </script>
-
+<!--     كود لعرض منتجات الخاصة بكل قسم ajax -->
     <script>
         $(document).ready(function() {
             $('select[name="Section"]').on('change', function() {
