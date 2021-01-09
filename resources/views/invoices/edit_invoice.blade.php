@@ -78,8 +78,8 @@
                                 <select name="Section" class="form-control SlectBox" onclick="console.log($(this).val())"
                                     onchange="console.log('change is firing')">
                                     <!--placeholder-->
-                                    <option value=" {{ $invoices->section->id }}">
-                                        {{ $invoices->section->section_name }}
+                                    <option value=" {{ $invoices->sections->id }}">
+                                        {{ $invoices->Sections->section_name }}
                                     </option>
                                     @foreach ($sections as $section)
                                         <option value="{{ $section->id }}"> {{ $section->section_name }}</option>

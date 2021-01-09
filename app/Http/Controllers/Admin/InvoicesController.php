@@ -10,6 +10,7 @@ use App\Models\invoice_attachments;
 use Illuminate\Support\Facades\Auth;
 
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +71,7 @@ class InvoicesController extends Controller
             'note' => $request->note,
         ]);
 
-        $invoice_id = invoices::latest()->first()->id;
+        $invoice_id = invoices::latest()->first()->id;//رقم الفاتورة 
         invoices_details::create([
             'id_Invoice' => $invoice_id,
             'invoice_number' => $request->invoice_number,
@@ -82,7 +83,42 @@ class InvoicesController extends Controller
             'user' => (Auth::user()->name),
         ]);
 
-    }
+
+        if ($request->hasFile('pic')) {
+
+            $invoice_id = Invoices::latest()->first()->id;
+            $image = $request->file('pic');
+            $file_name = $image->getClientOriginalName();
+            $invoice_number = $request->invoice_number;
+
+            $attachments = new invoice_attachments();
+            $attachments->file_name = $file_name;
+            $attachments->invoice_number = $invoice_number;
+            $attachments->Created_by = Auth::user()->name;
+            $attachments->invoice_id = $invoice_id;
+            $attachments->save();
+
+            // move pic
+            $imageName = $request->pic->getClientOriginalName();
+            $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
+        }
+
+
+           // $user = User::first();
+           // Notification::send($user, new AddInvoice($invoice_id));
+/*
+        $user = User::get();
+        $invoices = invoices::latest()->first();
+        Notification::send($user, new \App\Notifications\Add_invoice_new($invoices));
+
+     
+        
+        event(new MyEventClass('hello world'));
+*/
+        session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
+        return back();
+    
+    }  //end of store 
 
     /**
      * Display the specified resource.
@@ -103,7 +139,12 @@ class InvoicesController extends Controller
      */
     public function edit($id)
     {
-        //
+       
+        $invoices = invoices::where('id', $id)->first();
+        $sections = sections::all();
+        return view('invoices.edit_invoice', compact('sections', 'invoices'));
+    
+
     }
 
     /**
@@ -116,6 +157,25 @@ class InvoicesController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
+        $invoices = invoices::findOrFail($request->invoice_id);
+        $invoices->update([
+            'invoice_number' => $request->invoice_number,
+            'invoice_Date' => $request->invoice_Date,
+            'Due_date' => $request->Due_date,
+            'product' => $request->product,
+            'section_id' => $request->Section,
+            'Amount_collection' => $request->Amount_collection,
+            'Amount_Commission' => $request->Amount_Commission,
+            'Discount' => $request->Discount,
+            'Value_VAT' => $request->Value_VAT,
+            'Rate_VAT' => $request->Rate_VAT,
+            'Total' => $request->Total,
+            'note' => $request->note,
+        ]);
+
+        session()->flash('edit', 'تم تعديل الفاتورة بنجاح');
+        return back();
     }
 
     /**

@@ -87,35 +87,57 @@
                                         <div class="tab-pane active" id="tab4">
                                             <div class="table-responsive mt-15">
 
-                                                <table class="table table-striped" style="text-align:center">
+                                                <table class="table table-striped" >
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row">رقم الفاتورة</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;">رقم الفاتورة </span> 
+                                                                     
+                                                            </th>
                                                             <td>{{ $invoices->invoice_number }}</td>
-                                                            <th scope="row">تاريخ الاصدار</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;">تاريخ الاصدار </span> 
+                                                                </th>
                                                             <td>{{ $invoices->invoice_Date }}</td>
-                                                            <th scope="row">تاريخ الاستحقاق</th>
+                                                            <th scope="row" >
+                                                                <span style="font-size: 20px;">تاريخ الاستحقاق </span> </th>
                                                             <td>{{ $invoices->Due_date }}</td>
-                                                            <th scope="row">القسم</th>
-                                                            <td>{{ $invoices->Section->section_name }}</td>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> القسم </span></th>
+                                                            <td>{{ $invoices->Sections->section_name }}</td>
                                                         </tr>
 
                                                         <tr>
-                                                            <th scope="row">المنتج</th>
-                                                            <td>{{ $invoices->product }}</td>
-                                                            <th scope="row">مبلغ التحصيل</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> المنتج </span>
+                                                            </th>
+                                                            <td >{{ $invoices->product }}</td>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> مبلغ التحصيل </span>
+                                                                 </th>
                                                             <td>{{ $invoices->Amount_collection }}</td>
-                                                            <th scope="row">مبلغ العمولة</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> مبلغ العمولة </span>
+                                                                 
+                                                            </th>
                                                             <td>{{ $invoices->Amount_Commission }}</td>
-                                                            <th scope="row">الخصم</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> الخصم  </span>
+                                                                
+                                                            </th>
                                                             <td>{{ $invoices->Discount }}</td>
                                                         </tr>
 
 
                                                         <tr>
-                                                            <th scope="row">نسبة الضريبة</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;"> نسبةالضريبة   </span>
+
+                                                                 </th>
                                                             <td>{{ $invoices->Rate_VAT }}</td>
-                                                            <th scope="row">قيمة الضريبة</th>
+                                                            <th scope="row">
+                                                                <span style="font-size: 20px;">  قيمة الضريبة   </span>
+                                                            </th>
                                                             <td>{{ $invoices->Value_VAT }}</td>
                                                             <th scope="row">الاجمالي مع الضريبة</th>
                                                             <td>{{ $invoices->Total }}</td>
@@ -171,7 +193,7 @@
                                                                 <td>{{ $i }}</td>
                                                                 <td>{{ $x->invoice_number }}</td>
                                                                 <td>{{ $x->product }}</td>
-                                                                <td>{{ $invoices->Section->section_name }}</td>
+                                                                <td>{{ $invoices->Sections->section_name }}</td>
                                                                 @if ($x->Value_Status == 1)
                                                                     <td><span
                                                                             class="badge badge-pill badge-success">{{ $x->Status }}</span>
@@ -202,7 +224,7 @@
                                         <div class="tab-pane" id="tab6">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
-                                                @can('اضافة مرفق')
+                                                ('اضافة مرفق')
                                                     <div class="card-body">
                                                         <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                                                         <h5 class="card-title">اضافة مرفقات</h5>
@@ -223,7 +245,7 @@
                                                                 name="uploadedFile">تاكيد</button>
                                                         </form>
                                                     </div>
-                                                @endcan
+                                                
                                                 <br>
 
                                                 <div class="table-responsive mt-15">
@@ -260,14 +282,14 @@
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
 
-                                                                        @can('حذف المرفق')
+                                                                       
                                                                             <button class="btn btn-outline-danger btn-sm"
                                                                                 data-toggle="modal"
                                                                                 data-file_name="{{ $attachment->file_name }}"
                                                                                 data-invoice_number="{{ $attachment->invoice_number }}"
                                                                                 data-id_file="{{ $attachment->id }}"
                                                                                 data-target="#delete_file">حذف</button>
-                                                                        @endcan
+                                                                      
 
                                                                     </td>
                                                                 </tr>
