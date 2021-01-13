@@ -37,9 +37,15 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
     Route::get('/edit_invoice/{id}', 'InvoicesController@edit');
     
     Route::get('/Status_show/{id}', 'InvoicesController@show')->name('Status_show');
-    
+
     Route::post('/Status_Update/{id}', 'InvoicesController@Status_Update')->name('Status_Update');
-    
+
+    Route::get('Invoice_Paid','InvoicesController@Invoice_Paid');
+    Route::get('Invoice_UnPaid','InvoicesController@Invoice_UnPaid');
+    Route::get('Invoice_Partial','InvoicesController@Invoice_Partial');
+    Route::resource('Archive', 'InvoiceAchiveController');
+
+
 
 
 

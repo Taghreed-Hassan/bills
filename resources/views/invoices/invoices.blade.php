@@ -122,11 +122,13 @@
                                         <td>{{ $invoice->Total }}</td>
                                         <td>
                                             @if ($invoice->Value_Status == 1)
-                                                <span class="text-success">{{ $invoice->Status }}</span>
+                                            <span class="badge badge-pill badge-success"> {{ $invoice->Status }}</span>
                                             @elseif($invoice->Value_Status == 2)
-                                                <span class="text-danger">{{ $invoice->Status }}</span>
+                                                
+                                                <span class="badge badge-pill badge-danger">{{ $invoice->Status }}</span>
+                                                
                                             @else
-                                                <span class="text-warning">{{ $invoice->Status }}</span>
+                                            <span class="badge badge-pill badge-warning"> {{ $invoice->Status }}</span>
                                             @endif
 
                                         </td>
@@ -140,7 +142,8 @@
                                                 <div class="dropdown-menu tx-13">
                                                    
                                                         <a class="dropdown-item"
-                                                            href=" {{ url('edit_invoice') }}/{{ $invoice->id }}">تعديل
+                                                            href=" {{ url('edit_invoice') }}/{{ $invoice->id }}">
+                                                            <i class="text-success las la-pen"></i>تعديل
                                                             الفاتورة</a>
                                                    
 
@@ -155,24 +158,25 @@
                                                         <a class="dropdown-item"
                                                             href="{{ URL::route('Status_show', [$invoice->id]) }}"><i
                                                                 class=" text-success fas
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fa-money-bill"></i>&nbsp;&nbsp;تغير
+                                                            fa-money-bill"> </i>&nbsp;&nbsp;
+                                                            تغير
                                                             حالة
-                                                            الدفع</a>
+                                                            الدفع </a>
                                                    
 
-                                                    @can('ارشفة الفاتورة')
+                                       
+
                                                         <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
                                                             data-toggle="modal" data-target="#Transfer_invoice"><i
                                                                 class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
                                                             الارشيف</a>
-                                                    @endcan
+                                                   
 
-                                                    @can('طباعةالفاتورة')
                                                         <a class="dropdown-item" href="Print_invoice/{{ $invoice->id }}"><i
                                                                 class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
                                                             الفاتورة
                                                         </a>
-                                                    @endcan
+                                                   
                                                 </div>
                                             </div>
 
