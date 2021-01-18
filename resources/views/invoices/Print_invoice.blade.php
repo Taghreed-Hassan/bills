@@ -60,7 +60,7 @@
                                 <p class="invoice-info-row"><span>تاريخ الاستحقاق</span>
                                     <span>{{ $invoices->Due_date }}</span></p>
                                 <p class="invoice-info-row"><span>القسم</span>
-                                    <span>{{ $invoices->section->section_name }}</span></p>
+                                    <span>{{ $invoices->sections->section_name }}</span></p>
                             </div>
                         </div>
                         <div class="table-responsive mg-t-40">

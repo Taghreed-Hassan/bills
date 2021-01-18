@@ -17,7 +17,7 @@ class InvoiceAchiveController extends Controller
     public function index()
     {
         
-        $invoices = invoices::onlyTrashed()->get();
+        $invoices = invoices::onlyTrashed()->get();//تم ارشفتها 
         return view('Invoices.Archive_Invoices',compact('invoices'));
 
 
@@ -76,6 +76,11 @@ class InvoiceAchiveController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $id = $request->invoice_id;
+         $flight = Invoices::withTrashed()->where('id', $id)->restore();
+         //withTrashed() اللى فيها خانة dleted at فى bd
+         session()->flash('restore_invoice');
+         return redirect('/invoices');
     }
 
     /**
@@ -84,8 +89,11 @@ class InvoiceAchiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $invoices = invoices::withTrashed()->where('id',$request->invoice_id)->first();
+         $invoices->forceDelete();
+         session()->flash('delete_invoice');
+         return redirect('/Archive');
     }
 }

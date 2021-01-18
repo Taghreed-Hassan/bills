@@ -200,6 +200,9 @@ class InvoicesController extends Controller
 
      if (!$id_page==2) {
 
+         // <input type="hidden" name="id_page" id="id_page" value="2"> in invoices.blade
+
+
      if (!empty($Details->invoice_number)) {
 
          Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
@@ -209,29 +212,32 @@ class InvoicesController extends Controller
         //Delete()اما حذف من العرض فقط وموجودة فى db
 
 
-     $invoices->forceDelete();
-     session()->flash('delete_invoice');
-     return redirect('/invoices');
+        $invoices->forceDelete();
+        session()->flash('delete_invoice');
+        return redirect('/invoices');
 
-     }
+        }
 
      else {
 
-         $invoices->delete();
-         session()->flash('archive_invoice');
-         return redirect('/Archive');
-     }
+        $invoices->delete();
+        session()->flash('archive_invoice');
+        return redirect('/Archive');
+    }
 
-
-
-
-
-       
-
-       
-      
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
     public function getproducts($id)//pass id of sections
     {
@@ -304,6 +310,13 @@ class InvoicesController extends Controller
     {
         $invoices = Invoices::where('Value_Status',3)->get();
         return view('invoices.invoices_Partial',compact('invoices'));
+    }
+
+
+    public function Print_invoice($id)
+    {
+        $invoices = invoices::where('id', $id)->first();
+        return view('invoices.Print_invoice',compact('invoices'));
     }
 
 

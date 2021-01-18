@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
     Route::get('Invoice_Partial','InvoicesController@Invoice_Partial');
     Route::resource('Archive', 'InvoiceAchiveController');
 
+    Route::get('Print_invoice/{id}','InvoicesController@Print_invoice');
 
 
 
