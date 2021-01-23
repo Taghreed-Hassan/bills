@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\AddInvoice;
+
+
+
 
 
 class InvoicesController extends Controller
@@ -100,20 +104,14 @@ class InvoicesController extends Controller
             // move pic
             $imageName = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
+
         }
 
+        $user = User::first();
+           Notification::send($user, new AddInvoice($invoice_id));
 
-           // $user = User::first();
-           // Notification::send($user, new AddInvoice($invoice_id));
-/*
-        $user = User::get();
-        $invoices = invoices::latest()->first();
-        Notification::send($user, new \App\Notifications\Add_invoice_new($invoices));
 
-     
-        
-        event(new MyEventClass('hello world'));
-*/
+
         session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
         return back();
     
@@ -190,43 +188,44 @@ class InvoicesController extends Controller
        
        //return $request;
       //احضر كل تفاصيل الفاتوره وان كان لها اكثر من مرفق لذلك get 
-
-     $id = $request->invoice_id;
-     $invoices = invoices::where('id', $id)->first();
-     $Details = invoice_attachments::where('invoice_id', $id)->first();
-
-      $id_page =$request->id_page;
-
-
-     if (!$id_page==2) {
-
          // <input type="hidden" name="id_page" id="id_page" value="2"> in invoices.blade
 
+         $id = $request->invoice_id;
+         $invoices = invoices::where('id', $id)->first();
+         $Details = invoice_attachments::where('invoice_id', $id)->first();
+ 
+          $id_page =$request->id_page;
+ 
+ 
+         if (!$id_page==2) {
+ 
+         if (!empty($Details->invoice_number)) {
+ 
+             Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+         }
+ 
+         if ($invoices != null) {
+            $invoices->forceDelete();
+            return redirect('/invoices');
+            session()->flash('delete_invoice');
+        }//end  if null
+    
+        }//end first if
+ 
+         else {
+ 
+             $invoices->delete();
+             session()->flash('archive_invoice');
+             return redirect('/Archive');
+         }
+ 
 
-     if (!empty($Details->invoice_number)) {
-
-         Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
-     }
-
-      //$invoices->forceDelete();حذف كامل بالمرفق الخاص بها 
-        //Delete()اما حذف من العرض فقط وموجودة فى db
-
-
-        $invoices->forceDelete();
-        session()->flash('delete_invoice');
-        return redirect('/invoices');
-
-        }
-
-     else {
-
-        $invoices->delete();
-        session()->flash('archive_invoice');
-        return redirect('/Archive');
+    
     }
 
 
-    }
+
+
 
 
 
@@ -321,3 +320,16 @@ class InvoicesController extends Controller
 
 
 }
+/*
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=mohamadelsayed622@gmail.com
+MAIL_PASSWORD=nadia-789*
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS=samirgamal26@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+and
+DB_DATABASE=laravel
+
+*/

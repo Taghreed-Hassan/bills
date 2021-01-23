@@ -47,7 +47,17 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
 
     Route::get('Print_invoice/{id}','InvoicesController@Print_invoice');
 
-
+    Route::get('send-mail', function () {
+   
+        $details = [
+            'title' => 'Mail from ItSolutionStuff.com',
+            'body' => 'This is for testing email using smtp'
+        ];
+       
+        \Mail::to('taghreedhassan90@yahoo.com')->send(new \App\Mail\MyTestMail($details));
+       
+        dd("Email is Sent.");
+    });
 
 
 
