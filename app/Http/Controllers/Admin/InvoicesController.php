@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\InvoicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class InvoicesController extends Controller
@@ -304,6 +306,12 @@ class InvoicesController extends Controller
     {
         $invoices = Invoices::where('Value_Status',3)->get();
         return view('invoices.invoices_Partial',compact('invoices'));
+    }
+
+    public function export() 
+    {
+        
+        return Excel::download(new InvoicesExport, 'قائمة الفواتير.xlsx');
     }
 
 

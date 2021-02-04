@@ -46,17 +46,25 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
     Route::resource('Archive', 'InvoiceAchiveController');
 
 
+    Route::get('export_invoices', 'InvoicesController@export'); //excel
 
 
 
-
-
-    Route::get('foo', function () {
-        return view ('tabs');
-    });
-
-    Route::get('/{page}', 'Admin\AdminController@index');
+    
 
 
 });
+
+    /* -----------rolles  --------------permisions-------------------------------*/ 
+
+    Route::group(['middleware' => ['auth']], function() {
+        Route::resource('roles','RoleController');
+        Route::resource('users','UserController');
+       // Route::resource('products','ProductController');
+        });
+
+        Route::get('/{page}', 'Admin\AdminController@index');
+
+
+
 
