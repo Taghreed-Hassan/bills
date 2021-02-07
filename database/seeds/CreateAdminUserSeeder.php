@@ -15,7 +15,9 @@ public function run()
 $user = User::create([
 'name' => 'Taghreed Hassan',
 'email' => 'admin@admin.com',
-'password' => bcrypt('123456')
+'password' => bcrypt('123456'),
+'roles_name' => ["owner"],  //array
+'Status' => 'مفعل',
 ]);
 $role = Role::create(['name' => 'Admin']);
 $permissions = Permission::pluck('id','id')->all();

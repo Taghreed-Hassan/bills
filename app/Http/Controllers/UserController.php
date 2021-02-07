@@ -19,10 +19,12 @@ return view('users.show_users',compact('data'))
 ->with('i', ($request->input('page', 1) - 1) * 5);
 }
 
-    public function create()
+  
+
+public function create()
 {
 $roles = Role::pluck('name','name')->all();
-return view('users.create',compact('roles'));
+return view('users.Add_user',compact('roles'));
 }
 
 
@@ -36,7 +38,7 @@ $this->validate($request, [
 'name' => 'required',
 'email' => 'required|email|unique:users,email',
 'password' => 'required|same:confirm-password',
-'roles' => 'required'
+'roles_name' => 'required'
 ]);
 $input = $request->all();
 $input['password'] = Hash::make($input['password']);

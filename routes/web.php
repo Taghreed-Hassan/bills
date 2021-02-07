@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth','namespace' => 'Admin'], function () {
     Route::group(['middleware' => ['auth']], function() {
         Route::resource('roles','RoleController');
         Route::resource('users','UserController');
-       // Route::resource('products','ProductController');
+      
         });
 
         Route::get('/{page}', 'Admin\AdminController@index');
